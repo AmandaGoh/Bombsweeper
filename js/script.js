@@ -4,68 +4,105 @@ console.log('it works!')
 
 var $board = $('#container')
 
-
 var noOfBombs = 0
-//Game Difficulty Levels
-// var easyGame = {
-//   boardSize: 20,
-//   noOfBombs: 50
-// }
-// var hardGame = {
-//   boardSize: 30,
-//   noOfBombs: 100
-// }
-//Activate Easy Level
+
+var bombCell = {
+  bomb: true,
+  empty: false,
+  clue: false
+}
+
+var emptyCell = {
+  bomb: false,
+  empty: true,
+  clue: false
+}
+
+//Activate Easy or Hard Level
 $('#easy').on('click', easyGame)
 $('#hard').on('click', hardGame)
 
+//Default difficulty level
+easyGame()
+
 function easyGame () {
-  createBoard(20)
+  boardSize = 10
+  noOfBombs = 20
+  createBoard()
 }
 
 function hardGame() {
-  createBoard(40)
+  boardSize = 30
+  noOfBombs = 200
+  createBoard()
 }
 
-var matrix = []
-var cellCoordinates = []
-
 //Board has i rows and j columns
-function createBoard(boardSize){
+function createBoard(){
   $('#container').html('')
 
   var boardWidthHeight = 30 * boardSize
   $board.width(boardWidthHeight).height(boardWidthHeight)
 
+//Create matrix row
   matrix = new Array(boardSize)
   for (var i = 0; i < boardSize; i++){
     var $rowDiv = $('<div>')
-    // $($rowDiv).text('test')
+    //Give each row a number
+    $($rowDiv).attr('row-num', i)
+//Create matrix cell columns
     matrix[i] = new Array(boardSize)
     $($board).append($rowDiv)
 
     for (var j = 0; j < boardSize; j++){
-
       var $cell = $('<button>')
       $cell.addClass('cell')
-      // $($cell).text('test')
+      //Give each cell a number
+      $($cell).attr('cell-num', j)
       $($rowDiv).append($cell)
-
-      //Give each cell a coordinate
-      matrix[i][j] = $cell
-      $cell.i = i
-      $cell.j = j
-
-      cellCoordinates.push($cell)
       }
-    //randomly generate bombs
-    generateBombs(cellCoordinates)
     }
+    generateBombs()
+    console.log(matrix)
   }
 
-function generateBombs (){
+//Start game on click of any cell
+var $anyCell = $('.cell')
+$($anyCell).on('click', startGame)
 
+function startGame(){
+  // console.log($(this).attr('cell-num'))
+  // console.log($(this).parent().attr('row-num'))
+  // var rowClicked = parseInt($(this).parent().attr('row-num'))
+  // var cellClicked = parseInt($(this).attr('cell-num'))
+  // // console.log(typeof rowClicked)
+  // matrix[rowClicked][cellClicked] = new Object (emptyCell)
+  // console.log(matrix[rowClicked][cellClicked].bomb)
 
-
+  // console.log(matrix)
 }
+
+function generateBombs(){
+//Generate a random i and j coordinate to plant bombs
+  for (var i = 0; i < noOfBombs ; i++){
+    var randomi = Math.floor((Math.random() * (matrix.length - 1)))
+    var randomj = Math.floor((Math.random() * (matrix.length - 1)))
+      matrix[randomi][randomj] = new Object (bombCell)
+      console.log(randomi + ":" + randomj)
+    }
+    return matrix
+  }
+
+
+// function renderBombs () {
+//   for (var i = 0; i < matrix.length; i++) {
+// 		for (var j = 0; j < matrix.length; j++) {
+// 				if (cellCoordinates[i][j]["bomb"] === true) {
+// 			console.log("i is " + (i) + " j is " + (j))
+//         }
+//       }
+//     }
+//   }
+
+
 })
