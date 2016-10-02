@@ -12,6 +12,10 @@
   cursor: pointer;
 }
 
+.cell:hover{
+  background: rgb(147, 27, 241);
+}
+
 #easy, #hard, #reset{
   width: 100px;
   height: 50px;
@@ -20,4 +24,10 @@
   margin-bottom: 20px;
   border-radius: 5px;
   border: 2px solid black;
+}
+
+.bomb{
+  background: url("../img/bomb.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }

@@ -6,6 +6,7 @@ var $board = $('#container')
 
 var noOfBombs = 0
 
+
 var bombCell = {
   bomb: true,
   empty: false,
@@ -29,12 +30,16 @@ function easyGame () {
   boardSize = 10
   noOfBombs = 20
   createBoard()
+  generateBombs()
+  startGame()
 }
 
 function hardGame() {
   boardSize = 30
   noOfBombs = 200
   createBoard()
+  generateBombs()
+  startGame()
 }
 
 //Board has i rows and j columns
@@ -60,49 +65,97 @@ function createBoard(){
       //Give each cell a number
       $($cell).attr('cell-num', j)
       $($rowDiv).append($cell)
+      //Create each cell as an empty one when creating board
+      matrix[i][j] = new Object (emptyCell)
       }
     }
-    generateBombs()
-    console.log(matrix)
   }
 
-//Start game on click of any cell
-var $anyCell = $('.cell')
-$($anyCell).on('click', startGame)
-
-function startGame(){
-  // console.log($(this).attr('cell-num'))
-  // console.log($(this).parent().attr('row-num'))
-  // var rowClicked = parseInt($(this).parent().attr('row-num'))
-  // var cellClicked = parseInt($(this).attr('cell-num'))
-  // // console.log(typeof rowClicked)
-  // matrix[rowClicked][cellClicked] = new Object (emptyCell)
-  // console.log(matrix[rowClicked][cellClicked].bomb)
-
-  // console.log(matrix)
-}
-
-function generateBombs(){
-//Generate a random i and j coordinate to plant bombs
-  for (var i = 0; i < noOfBombs ; i++){
-    var randomi = Math.floor((Math.random() * (matrix.length - 1)))
-    var randomj = Math.floor((Math.random() * (matrix.length - 1)))
+  function generateBombs(){
+    $('.cell').html('')
+    //Generate a random i and j coordinate to plant bombs
+    for (var i = 0; i < noOfBombs ; i++){
+      var randomi = Math.floor((Math.random() * (matrix.length - 1)))
+      var randomj = Math.floor((Math.random() * (matrix.length - 1)))
       matrix[randomi][randomj] = new Object (bombCell)
+    //To see which coordinates have bombs
       console.log(randomi + ":" + randomj)
     }
     return matrix
   }
 
+//Start game on click of any cell
+function startGame(){
+  var $anyCell = $('.cell')
+  $($anyCell).on('click', playGame)
+  // console.log($(this).attr('cell-num'))
+  // console.log($(this).parent().attr('row-num'))
+  function playGame(){
+    var bombCount = 0
+    var rowClicked = parseInt($(this).parent().attr('row-num'))
+    var cellClicked = parseInt($(this).attr('cell-num'))
+    // console.log(typeof rowClicked)
+    // matrix[rowClicked][cellClicked] = new Object (emptyCell)
+    // console.log(matrix[rowClicked][cellClicked].bomb)
+    if (matrix[rowClicked][cellClicked].bomb === true){
+      // $(this).css('background', 'red')
+      $(this).addClass('bomb')
+      gameOver()
+    }
+    else if (matrix[rowClicked][cellClicked].empty === true){
+      revealCells()
+    }
+    function gameOver () {
+      alert('Game Over!')
+    }
 
-// function renderBombs () {
-//   for (var i = 0; i < matrix.length; i++) {
-// 		for (var j = 0; j < matrix.length; j++) {
-// 				if (cellCoordinates[i][j]["bomb"] === true) {
-// 			console.log("i is " + (i) + " j is " + (j))
-//         }
-//       }
-//     }
-//   }
+    // console.log(matrix.length)
+
+    function revealCells() {
+      //check box to the left up
+      if (rowClicked !== 0 && cellClicked !== 0 && matrix[rowClicked - 1][cellClicked - 1].bomb === true){
+        bombCount += 1
+      }
+      // check box above
+      if (rowClicked !== 0 && matrix[rowClicked - 1][cellClicked].bomb === true){
+        bombCount += 1
+      }
+      //check box to the right up
+      if (rowClicked !== 0 && cellClicked !== (matrix.length - 1) && matrix[rowClicked - 1][cellClicked + 1].bomb === true){
+        bombCount += 1
+      }
+      //check box to the right
+      if(cellClicked !== (matrix.length - 1) && matrix[rowClicked][cellClicked + 1].bomb === true){
+        bombCount += 1
+      }
+      //check box down right
+      if(rowClicked !== (matrix.length -1) && cellClicked !== (matrix.length -1) && matrix[rowClicked + 1][cellClicked + 1].bomb === true){
+        bombCount += 1
+      }
+      //check box down
+      if(rowClicked !== (matrix.length - 1) && matrix[rowClicked + 1][cellClicked].bomb === true){
+        bombCount += 1
+      }
+      //check box down left
+      if(rowClicked !== (matrix.length -1) && cellClicked !== 0 && matrix[rowClicked + 1][cellClicked - 1].bomb === true){
+        bombCount += 1
+      }
+      //check box left
+      if(cellClicked !== 0 && matrix[rowClicked][cellClicked - 1].bomb === true){
+        bombCount += 1
+      }
+      return bombCount
+    }
+
+      $(this).text(bombCount)
+    }
+
+}
+
+
+
+
+
 
 
 })
