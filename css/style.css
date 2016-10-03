@@ -60,6 +60,11 @@ h2{
   font-family: 'Lato', sans-serif;
 }
 
+.finish{
+  color: red;
+  animation: blinker 1s linear infinite;
+}
+
 h3{
   font-family: 'Lato', sans-serif;
 }

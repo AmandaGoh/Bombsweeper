@@ -54,6 +54,8 @@ function resetGame() {
 //Board has i rows and j columns
 function createBoard(){
     $('#container').html('')
+    $('h2').text('Click a Cell to Start!')
+    $('h2').addClass('before')
 
     var boardWidthHeight = 30 * boardSize
     $board.width(boardWidthHeight).height(boardWidthHeight)
@@ -145,10 +147,12 @@ function startGame() {
         }
     //Defining functions within Play Game
         function gameOver () {
-          alert('Game Over!')
-          window.location.reload(true)
-          }
-
+          $('h2').text('Game Over')
+          $('h2').addClass('finish')
+          window.setTimeout(function restart() {
+              window.location.reload(true)
+            }, 5000)
+        }
         function winGame(){
           alert('Unbelievable! You are a champ!')
         }
