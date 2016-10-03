@@ -1,7 +1,41 @@
+.wrapper{
+  display: inline-block;
+  float: left;
+}
+
+.wrapper.one{
+  width:30%;
+  margin: 0% 0% 0% 10%;
+}
+
+.wrapper.two{
+  width: 40%;
+}
+
 #container{
-  /*width: 600px;
-  height: 600px;*/
+  clear: both;
   background: grey;
+  margin: 10% auto;
+}
+
+h1{
+  font-family: 'Creepster', cursive;
+  font-size: 65px;
+  color: rgb(147, 27, 241);
+}
+
+h2{
+  font-family: 'Lato', sans-serif;
+}
+
+p{
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+}
+
+.aim{
+  font-size:18px;
+  font-weight: bold;
 }
 
 .cell{
@@ -10,20 +44,36 @@
   float: left;
   border: 1px solid black;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .cell:hover{
   background: rgb(147, 27, 241);
 }
 
-#easy, #hard, #reset{
+#easy, #hard {
   width: 100px;
   height: 50px;
   font-size: 14px;
-  margin-left: 20px;
+  margin-left: 0;
+  margin-right: 5%;
   margin-bottom: 20px;
   border-radius: 5px;
   border: 2px solid black;
+  cursor: pointer;
+}
+
+#reset {
+  width: 100px;
+  height: 50px;
+  font-size: 14px;
+  margin-left: 0;
+  margin-right: 5%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 2px solid black;
+  cursor: pointer;
+  background: rgb(246, 75, 12);
 }
 
 .bomb{
