@@ -1,3 +1,7 @@
+body{
+  background: url("../img/skyscrapers.jpg");
+}
+
 .wrapper{
   display: inline-block;
   float: left;
@@ -12,10 +16,29 @@
   width: 40%;
 }
 
+.inner.two{
+  width: 100%;
+  height: 10%;
+  background: rgb(167, 134, 228);
+  color: black;
+  text-align: center;
+  padding: 2%;
+  border: 2px dotted black;
+}
+
+.inner.three{
+  width: 100%;
+  color: white;
+  background: rgb(30, 35, 36);
+  padding: 2%;
+  margin: 5% 0% 0% 0%;
+
+}
+
 #container{
   clear: both;
   background: grey;
-  margin: 10% auto;
+  margin: 10% 0% 0% 10%;
 }
 
 h1{
@@ -24,13 +47,27 @@ h1{
   color: rgb(147, 27, 241);
 }
 
+.before{
+  font-family: 'Lato', sans-serif;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
 h2{
+  font-family: 'Lato', sans-serif;
+}
+
+h3{
   font-family: 'Lato', sans-serif;
 }
 
 p{
   font-family: 'Lato', sans-serif;
   font-size: 16px;
+  color: white;
 }
 
 .aim{

@@ -9,22 +9,28 @@
   <body>
 
     <div class = "wrapper one">
-    <h1>Bomb Sweeper</h1>
+      <div class = "inner one">
+        <h1>Bomb Sweeper</h1>
 
-    <button id = "easy" type="button" name="easy">Easy</button>
-    <button id = "hard" type="button" name="hard">Hard</button>
-    <button id = "reset" type="button" name="reset">Reset</button>
-
-    <h2>Playing the Game</h2>
-    <p>
-      <span class="aim">To Win :</span> Locate all bombs on the grid without directly clicking on them.<br><br>
-      <span class="aim">To Begin:</span> Select and click on a random tile (fingers crossed it is not a bomb).<br><br>
-      <span class="aim">Play Smart:</span> Tiles will reveal clues indicating surrounding number of bombs.
-    </p>
+        <button id = "easy" type="button" name="easy">Easy</button>
+        <button id = "hard" type="button" name="hard">Hard</button>
+        <button id = "reset" type="button" name="reset">Reset</button>
+      </div>
+      <div class = "inner two">
+        <h2 class = "before">Click a Cell to Start!</h2>
+      </div>
+      <div class = "inner three">
+        <h3>Playing the Game</h3>
+        <p>
+          <span class="aim">To Win :</span> Locate all bombs on the grid without directly clicking on them.<br><br>
+          <span class="aim">To Begin:</span> Select and click on a random tile (fingers crossed it is not a bomb).<br><br>
+          <span class="aim">Play Smart:</span> Tiles will reveal clues indicating surrounding number of bombs.
+        </p>
+      </div>
     </div>
 
     <div class = "wrapper two">
-    <div id = "container"></div>
+          <div id = "container"></div>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

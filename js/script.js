@@ -113,9 +113,12 @@ function createBoard(){
 function startGame() {
       var $anyCell = $('.cell')
       $($anyCell).on('click', playGame)
+
   // console.log($(this).attr('cell-num'))
   // console.log($(this).parent().attr('row-num'))
     function playGame() {
+        $('h2').text("No of Bombs: " + noOfBombs)
+        $('h2').removeClass('before')
         var bombCount = 0
         var rowClicked = parseInt($(this).parent().attr('row-num'))
         var cellClicked = parseInt($(this).attr('cell-num'))
