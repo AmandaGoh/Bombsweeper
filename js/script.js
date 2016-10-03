@@ -5,6 +5,7 @@ console.log('it works!')
 var $board = $('#container')
 
 var noOfBombs = 0
+var revealedCells = 0
 
 //Bind each cell to either function
 function bombCell () {
@@ -32,6 +33,7 @@ easyGame()
 function easyGame () {
   boardSize = 10
   noOfBombs = boardSize * boardSize * 0.20
+  var winningNoOfClicks = (boardSize * boardSize) - noOfBombs
   // console.log(noOfBombs)
   createBoard()
   startGame()
@@ -78,6 +80,14 @@ function createBoard(){
       }
     }
     generateBombs()
+        //reveal bombs in red on grid (to check win condition)
+        // for (var i = 0; i < boardSize; i++){
+        //   for (var j = 0; j< boardSize; j++) {
+        //     if (matrix[i][j].bomb === true){
+        //       $('.row.' + i).find('.cell.' + j).css('background','red')
+        //     }
+        //   }
+        // }
     return matrix
   }
 
@@ -110,6 +120,7 @@ function startGame() {
         var rowClicked = parseInt($(this).parent().attr('row-num'))
         var cellClicked = parseInt($(this).attr('cell-num'))
         matrix[rowClicked][cellClicked].clicked = true
+        revealedCells += 1
         // console.log(typeof rowClicked)
         // matrix[rowClicked][cellClicked] = new Object (emptyCell)
         // console.log(matrix[rowClicked][cellClicked].bomb)
@@ -124,12 +135,20 @@ function startGame() {
         if (bombCount ===0){
           floodClues()
         }
+    //Player Wins if ALL cells revealed and there are no bombs revealed
+        var winningNoOfClicks = (boardSize * boardSize) - noOfBombs
+        if (revealedCells === winningNoOfClicks) {
+          winGame()
+        }
     //Defining functions within Play Game
-            function gameOver () {
-              alert('Game Over!')
-              }
+        function gameOver () {
+          alert('Game Over!')
+          window.location.reload(true)
+          }
 
-    // console.log(matrix.length)
+        function winGame(){
+          alert('Unbelievable! You are a champ!')
+        }
 
         function revealClue() {
           // console.log(cellClicked)
@@ -231,8 +250,8 @@ function startGame() {
               matrix[rowClicked][cellClicked - 1].clicked = true
               }
             }
+          return matrix
         }
-
       }
 
 
