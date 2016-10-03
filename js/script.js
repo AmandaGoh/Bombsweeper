@@ -85,8 +85,13 @@ function createBoard(){
     $('.cell').html('')
     //Generate a random i and j coordinate to plant bombs
     for (var i = 0; i < noOfBombs ; i++){
-        var randomi = Math.round((Math.random() * (matrix.length - 1)))
-        var randomj = Math.round((Math.random() * (matrix.length - 1)))
+        var randomi = Math.round(Math.random() * (matrix.length - 1))
+        var randomj = Math.round(Math.random() * (matrix.length - 1))
+        //prevent random generation of repeated coordinates
+          while (matrix[randomi][randomj].bomb === true){
+            var randomi = Math.round(Math.random() * (matrix.length - 1))
+            var randomj = Math.round(Math.random() * (matrix.length - 1))
+          }
         matrix[randomi][randomj] = new (bombCell)
       //To see which coordinates have bombs
         console.log(randomi + ":" + randomj)
