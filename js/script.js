@@ -6,13 +6,13 @@ var $board = $('#container')
 
 var noOfBombs = 0
 var revealedCells = 0
-var noOfFlags = 0
 
 //Bind each cell to either function
 function bombCell () {
   this.bomb = true
   this.empty = false
   this.clicked = false
+  this.flagged = false
 }
 
 function emptyCell () {
@@ -36,7 +36,6 @@ function easyGame () {
   revealedCells = 0
   boardSize = 10
   noOfBombs = boardSize * boardSize * 0.10
-  noOfFlags = noOfBombs
   var winningNoOfClicks = (boardSize * boardSize) - noOfBombs
   // console.log(noOfBombs)
   createBoard()
@@ -47,7 +46,6 @@ function hardGame() {
   revealedCells = 0
   boardSize = 20
   noOfBombs = boardSize * boardSize * 0.20
-  noOfFlags = noOfBombs
   // console.log(noOfBombs)
   createBoard()
   startGame()
@@ -89,13 +87,13 @@ function createBoard(){
     }
     generateBombs()
         //reveal bombs in red on grid (to check win condition)
-        // for (var i = 0; i < boardSize; i++){
-        //   for (var j = 0; j< boardSize; j++) {
-        //     if (matrix[i][j].bomb === true){
-        //       $('.row.' + i).find('.cell.' + j).css('background','red')
-        //     }
-        //   }
-        // }
+        for (var i = 0; i < boardSize; i++){
+          for (var j = 0; j< boardSize; j++) {
+            if (matrix[i][j].bomb === true){
+              $('.row.' + i).find('.cell.' + j).css('background','red')
+            }
+          }
+        }
     return matrix
   }
 
@@ -119,6 +117,8 @@ function createBoard(){
 
 //Start game on click of any cell
 function startGame() {
+      var noOfFlags = noOfBombs
+      console.log(noOfFlags)
       var $anyCell = $('.cell')
       $($anyCell).on('click', playGame)
       $($anyCell).on('contextmenu', flagCell)
@@ -159,6 +159,7 @@ function startGame() {
         }
     //Defining functions within Play Game
         function gameOver () {
+          $('#bomb-sound')[0].play()
           $('h2').text('Game Over')
           $('h2').addClass('finish')
           window.setTimeout(function restart() {
@@ -166,6 +167,7 @@ function startGame() {
             }, 5000)
         }
         function winGame(){
+          $('#crowd-cheer')[0].play()
           $('h2').text('Unbelieveable! You are a champ!')
           $('h2').addClass('finish')
         }
@@ -287,6 +289,7 @@ function startGame() {
         //if cell has been right-clicked before, right-clicking again will remove flag
         else if (matrix[rowClicked][cellClicked].flagged === true) {
             $('.row.' + rowClicked).find('.cell.' + cellClicked).removeClass('flag')
+            matrix[rowClicked][cellClicked].clicked = false
             matrix[rowClicked][cellClicked].flagged = false
             noOfFlags += 1
         }
@@ -294,7 +297,8 @@ function startGame() {
           $($anyCell).unbind('contextmenu', flagCell)
           alert('No flags left!')
         }
-        console.log(noOfFlags)
+        // console.log(noOfFlags)
+        return noOfFlags
       }
 
     }
