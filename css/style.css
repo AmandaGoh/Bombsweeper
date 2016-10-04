@@ -18,11 +18,11 @@ body{
 
 .inner.two{
   width: 100%;
-  height: 10%;
+  height: 100px;
   background: rgb(167, 134, 228);
   color: black;
   text-align: center;
-  padding: 2%;
+  padding: 0;
   border: 2px dotted black;
 }
 
@@ -58,6 +58,25 @@ h1{
 
 h2{
   font-family: 'Lato', sans-serif;
+  font-size: 25px;
+}
+
+.alert.one{
+  font-family: 'Lato', sans-serif;
+  width: 100%;
+  height: 40px;
+  font-size: 25px;
+  text-align: left;
+  padding: 2%;
+}
+
+.alert.two{
+  font-family: 'Lato', sans-serif;
+  width: 100%;
+  height: 40px;
+  font-size: 25px;
+  text-align: left;
+  padding: 2%;
 }
 
 .finish{
@@ -91,6 +110,10 @@ p{
 
 .cell:hover{
   background: rgb(147, 27, 241);
+}
+
+.revealed-cell{
+  background: rgb(245, 104, 239);
 }
 
 #easy, #hard {

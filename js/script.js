@@ -128,19 +128,21 @@ $(document).ready(function () {
     // console.log($(this).attr('cell-num'))
     // console.log($(this).parent().attr('row-num'))
     function playGame () {
-      var bombCount = 0
       var rowClicked = parseInt($(this).parent().attr('row-num'))
       var cellClicked = parseInt($(this).attr('cell-num'))
 
       //only allow a click if cell has not been clicked before
       if (matrix[rowClicked][cellClicked].clicked === false) {
+          var bombCount = 0
           matrix[rowClicked][cellClicked].clicked = true
           $('.row.' + rowClicked).find('.cell.' + cellClicked).addClass('revealed')
           revealedCells += 1
       // upon first click
           if (revealedCells === 1) {
-              $('h2').text('BOMBS: ' + noOfBombs + ' ' + 'FLAGS: ' + noOfFlags)
+              $('h2').text('')
               $('h2').removeClass('before')
+              $('.alert.one').text("No of Bombs : " + noOfBombs)
+              $('.alert.two').text("No of Flags : " + noOfFlags)
           }
           if (matrix[rowClicked][cellClicked].bomb === true) {
             // $(this).css('background', 'red')
@@ -159,8 +161,9 @@ $(document).ready(function () {
       // Defining functions within Play Game
       function gameOver () {
         $('#bomb-sound')[0].play()
-        $('h2').text('Game Over')
-        $('h2').addClass('finish')
+        $('.alert.two').text('')
+        $('.alert.one').text('Game Over')
+        $('.alert.one').addClass('finish')
         window.setTimeout(function restart () {
           window.location.reload(true)
         }, 5000)
@@ -169,8 +172,12 @@ $(document).ready(function () {
       function checkWin () {
         if (revealedCells == boardSize * boardSize - noOfBombs) {
           $('#crowd-cheer')[0].play()
-          $('h2').text('Unbelieveable! You are a champ!')
-          $('h2').addClass('finish')
+          $('.alert.two').text('')
+          $('.alert.one').text('Unbelieveable! You are a champ!')
+          $('.alert.one').addClass('finish')
+          window.setTimeout(function restart () {
+            window.location.reload(true)
+          }, 5000)
         }
       }
 
@@ -236,6 +243,7 @@ $(document).ready(function () {
       }
 
       $(this).text(bombCount)
+      $(this).addClass('revealed-cell')
 
       function floodClues () {
         // Cell up
@@ -291,6 +299,7 @@ $(document).ready(function () {
         matrix[rowClicked][cellClicked].clicked = true
         matrix[rowClicked][cellClicked].flagged = true
         noOfFlags -= 1
+        $('.alert.two').text("No of Flags : " + noOfFlags)
       }
       // if cell has been right-clicked before, right-clicking again will remove flag
       else if (matrix[rowClicked][cellClicked].flagged === true) {
@@ -298,6 +307,7 @@ $(document).ready(function () {
         matrix[rowClicked][cellClicked].clicked = false
         matrix[rowClicked][cellClicked].flagged = false
         noOfFlags += 1
+        $('.alert.two').text("No of Flags : " + noOfFlags)
       }
       if (noOfFlags === 0) {
         $($anyCell).unbind('contextmenu', flagCell)
