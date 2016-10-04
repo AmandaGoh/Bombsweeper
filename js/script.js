@@ -20,6 +20,7 @@ function emptyCell () {
   this.empty = true
   this.clicked = false
   this.okToReveal = false
+  this.flagged = false
 }
 
 //Activate Easy or Hard Level
@@ -34,7 +35,7 @@ easyGame()
 function easyGame () {
   revealedCells = 0
   boardSize = 10
-  noOfBombs = boardSize * boardSize * 0.20
+  noOfBombs = boardSize * boardSize * 0.10
   noOfFlags = noOfBombs
   var winningNoOfClicks = (boardSize * boardSize) - noOfBombs
   // console.log(noOfBombs)
@@ -45,7 +46,7 @@ function easyGame () {
 function hardGame() {
   revealedCells = 0
   boardSize = 20
-  noOfBombs = boardSize * boardSize * 0.25
+  noOfBombs = boardSize * boardSize * 0.20
   noOfFlags = noOfBombs
   // console.log(noOfBombs)
   createBoard()
@@ -121,6 +122,7 @@ function startGame() {
       var $anyCell = $('.cell')
       $($anyCell).on('click', playGame)
       $($anyCell).on('contextmenu', flagCell)
+      //remove browser menu upon right click
       $($anyCell).contextmenu(function(){
         return false
       })
@@ -164,7 +166,8 @@ function startGame() {
             }, 5000)
         }
         function winGame(){
-          alert('Unbelievable! You are a champ!')
+          $('h2').text('Unbelieveable! You are a champ!')
+          $('h2').addClass('finish')
         }
 
         function revealClue() {
@@ -275,12 +278,23 @@ function startGame() {
         var rowClicked = parseInt($(this).parent().attr('row-num'))
         var cellClicked = parseInt($(this).attr('cell-num'))
         // console.log(rowClicked + ":" + cellClicked)
-        $('.row.' + rowClicked).find('.cell.' + cellClicked).addClass('flag')
-        noOfFlags -= 1
+        if(matrix[rowClicked][cellClicked].clicked === false){
+            $('.row.' + rowClicked).find('.cell.' + cellClicked).addClass('flag')
+            matrix[rowClicked][cellClicked].clicked = true
+            matrix[rowClicked][cellClicked].flagged = true
+            noOfFlags -= 1
+        }
+        //if cell has been right-clicked before, right-clicking again will remove flag
+        else if (matrix[rowClicked][cellClicked].flagged === true) {
+            $('.row.' + rowClicked).find('.cell.' + cellClicked).removeClass('flag')
+            matrix[rowClicked][cellClicked].flagged = false
+            noOfFlags += 1
+        }
         if(noOfFlags === 0){
           $($anyCell).unbind('contextmenu', flagCell)
           alert('No flags left!')
         }
+        console.log(noOfFlags)
       }
 
     }

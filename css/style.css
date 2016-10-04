@@ -129,3 +129,9 @@ p{
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.flag:hover{
+  background: url("../img/flag.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
