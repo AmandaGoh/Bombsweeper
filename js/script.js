@@ -6,6 +6,7 @@ var $board = $('#container')
 
 var noOfBombs = 0
 var revealedCells = 0
+var noOfFlags = 0
 
 //Bind each cell to either function
 function bombCell () {
@@ -31,8 +32,10 @@ $('#reset').on('click', resetGame)
 easyGame()
 
 function easyGame () {
+  revealedCells = 0
   boardSize = 10
   noOfBombs = boardSize * boardSize * 0.20
+  noOfFlags = noOfBombs
   var winningNoOfClicks = (boardSize * boardSize) - noOfBombs
   // console.log(noOfBombs)
   createBoard()
@@ -40,8 +43,10 @@ function easyGame () {
 }
 
 function hardGame() {
+  revealedCells = 0
   boardSize = 20
   noOfBombs = boardSize * boardSize * 0.25
+  noOfFlags = noOfBombs
   // console.log(noOfBombs)
   createBoard()
   startGame()
@@ -115,12 +120,13 @@ function createBoard(){
 function startGame() {
       var $anyCell = $('.cell')
       $($anyCell).on('click', playGame)
-
+      $($anyCell).on('contextmenu', flagCell)
+      $($anyCell).contextmenu(function(){
+        return false
+      })
   // console.log($(this).attr('cell-num'))
   // console.log($(this).parent().attr('row-num'))
     function playGame() {
-        $('h2').text("No of Bombs: " + noOfBombs)
-        $('h2').removeClass('before')
         var bombCount = 0
         var rowClicked = parseInt($(this).parent().attr('row-num'))
         var cellClicked = parseInt($(this).attr('cell-num'))
@@ -129,6 +135,10 @@ function startGame() {
         // console.log(typeof rowClicked)
         // matrix[rowClicked][cellClicked] = new Object (emptyCell)
         // console.log(matrix[rowClicked][cellClicked].bomb)
+        if (revealedCells === 1){
+          $('h2').text("BOMBS: " + noOfBombs + " " + "FLAGS: " + noOfFlags)
+          $('h2').removeClass('before')
+        }
         if (matrix[rowClicked][cellClicked].bomb === true){
           // $(this).css('background', 'red')
           $(this).addClass('bomb')
@@ -261,7 +271,17 @@ function startGame() {
         }
       }
 
-
+      function flagCell(){
+        var rowClicked = parseInt($(this).parent().attr('row-num'))
+        var cellClicked = parseInt($(this).attr('cell-num'))
+        // console.log(rowClicked + ":" + cellClicked)
+        $('.row.' + rowClicked).find('.cell.' + cellClicked).addClass('flag')
+        noOfFlags -= 1
+        if(noOfFlags === 0){
+          $($anyCell).unbind('contextmenu', flagCell)
+          alert('No flags left!')
+        }
+      }
 
     }
 

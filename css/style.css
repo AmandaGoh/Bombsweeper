@@ -123,3 +123,9 @@ p{
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.flag{
+  background: url("../img/flag.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
