@@ -58,7 +58,7 @@ $(document).ready(function () {
   // Board has i rows and j columns
   function createBoard () {
     $('#container').html('')
-    $('h2').text('Click a Cell to Start!')
+    $('h2').text('Click a Cell to Begin!')
     $('h2').addClass('before')
 
     var boardWidthHeight = 30 * boardSize

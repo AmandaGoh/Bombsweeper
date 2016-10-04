@@ -45,6 +45,8 @@ h1{
   font-family: 'Creepster', cursive;
   font-size: 65px;
   color: rgb(147, 27, 241);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
 }
 
 .before{
@@ -68,6 +70,8 @@ h2{
   font-size: 25px;
   text-align: left;
   padding: 2%;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
 }
 
 .alert.two{
@@ -77,10 +81,12 @@ h2{
   font-size: 25px;
   text-align: left;
   padding: 2%;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
 }
 
 .finish{
-  color: red;
+  color: rgb(246, 103, 11);
   animation: blinker 1s linear infinite;
 }
 
@@ -146,6 +152,13 @@ p{
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.bomb:hover{
+  background: url("../img/bomb.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 
 .flag{
   background: url("../img/flag.svg");
