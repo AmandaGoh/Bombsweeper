@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  console.log('it works!')
+  // console.log('it works!')
 
   var $board = $('#container')
 
@@ -58,8 +58,11 @@ $(document).ready(function () {
   // Board has i rows and j columns
   function createBoard () {
     $('#container').html('')
-    $('h2').text('Click a Cell to Begin!')
-    $('h2').addClass('before')
+    $('.alert.one').text('Click a Cell to Begin!')
+    $('.alert.one').addClass('before')
+    if($('.alert.one').hasClass('finish')){
+      $('.alert.one').removeClass('finish')
+    }
 
     var boardWidthHeight = 30 * boardSize
     $board.width(boardWidthHeight).height(boardWidthHeight)
@@ -139,8 +142,7 @@ $(document).ready(function () {
           revealedCells += 1
       // upon first click
           if (revealedCells === 1) {
-              $('h2').text('')
-              $('h2').removeClass('before')
+              $('.alert.one').removeClass('before')
               $('.alert.one').text("No of Bombs : " + noOfBombs)
               $('.alert.two').text("No of Flags : " + noOfFlags)
           }
@@ -155,7 +157,9 @@ $(document).ready(function () {
           if (bombCount === 0) {
             floodClues()
           }
+          if (matrix[rowClicked][cellClicked].bomb === false) {
           checkWin()
+          }
       }
       // Player Wins if ALL cells revealed and there are no bombs revealed
       // Defining functions within Play Game
@@ -164,20 +168,20 @@ $(document).ready(function () {
         $('.alert.two').text('')
         $('.alert.one').text('Game Over')
         $('.alert.one').addClass('finish')
-        window.setTimeout(function restart () {
-          window.location.reload(true)
-        }, 5000)
+        // window.setTimeout(function restart () {
+        //   window.location.reload(true)
+        // }, 5000)
       }
-      console.log(revealedCells)
+      // console.log(revealedCells)
       function checkWin () {
         if (revealedCells == boardSize * boardSize - noOfBombs) {
           $('#crowd-cheer')[0].play()
           $('.alert.two').text('')
           $('.alert.one').text('Unbelieveable! You are a champ!')
           $('.alert.one').addClass('finish')
-          window.setTimeout(function restart () {
-            window.location.reload(true)
-          }, 5000)
+          // window.setTimeout(function restart () {
+          //   window.location.reload(true)
+          // }, 5000)
         }
       }
 
