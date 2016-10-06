@@ -113,7 +113,7 @@ $(document).ready(function () {
       }
       matrix[randomi][randomj] = new (bombCell)
       // To see which coordinates have bombs
-      console.log(randomi + ':' + randomj)
+      // console.log(randomi + ':' + randomj)
     }
     return matrix
   }
@@ -295,8 +295,9 @@ $(document).ready(function () {
     function flagCell () {
       var rowClicked = parseInt($(this).parent().attr('row-num'))
       var cellClicked = parseInt($(this).attr('cell-num'))
+      console.log(noOfFlags)
       // console.log(rowClicked + ":" + cellClicked)
-      if (matrix[rowClicked][cellClicked].clicked === false) {
+      if (matrix[rowClicked][cellClicked].clicked === false && noOfFlags > 0) {
         $('.row.' + rowClicked).find('.cell.' + cellClicked).addClass('flag')
         matrix[rowClicked][cellClicked].clicked = true
         matrix[rowClicked][cellClicked].flagged = true
@@ -311,12 +312,8 @@ $(document).ready(function () {
         noOfFlags += 1
         $('.alert.two').text("No of Flags : " + noOfFlags)
       }
-      if (noOfFlags === 0) {
-        $($anyCell).off('contextmenu', flagCell)
-        alert('No flags left!')
-      }
-      // console.log(noOfFlags)
-      // return noOfFlags
+
+
     }
   }
 
