@@ -170,6 +170,7 @@ $(document).ready(function () {
         $('.alert.one').text('Game Over')
         $('.alert.one').addClass('finish')
         $($anyCell).off('click', playGame)
+        $($anyCell).off('contextmenu', flagCell)
       }
       // console.log(revealedCells)
       function checkWin () {
@@ -178,6 +179,8 @@ $(document).ready(function () {
           $('.alert.two').text('')
           $('.alert.one').text('Unbelieveable! You are a champ!')
           $('.alert.one').addClass('finish')
+          $($anyCell).off('click', playGame)
+          $($anyCell).off('contextmenu', flagCell)
           // window.setTimeout(function restart () {
           //   window.location.reload(true)
           // }, 5000)
