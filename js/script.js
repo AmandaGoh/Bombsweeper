@@ -60,6 +60,7 @@ $(document).ready(function () {
     $('#container').html('')
     $('.alert.one').text('Click a Cell to Begin!')
     $('.alert.one').addClass('before')
+    $('.alert.two').text('')
     if($('.alert.one').hasClass('finish')){
       $('.alert.one').removeClass('finish')
     }
@@ -154,9 +155,12 @@ $(document).ready(function () {
           }
           if (matrix[rowClicked][cellClicked].empty === true) {
             revealClue()
-          }
-          if (bombCount === 0) {
-            floodClues()
+            if (bombCount > 0) {
+            $(this).text(bombCount)
+            }
+            if (bombCount === 0) {
+              floodClues()
+            }
           }
           if (matrix[rowClicked][cellClicked].bomb === false) {
           checkWin()
@@ -248,7 +252,7 @@ $(document).ready(function () {
         return bombCount
       }
 
-      $(this).text(bombCount)
+      // $(this).text(bombCount)
 
       function floodClues () {
         // Cell up
