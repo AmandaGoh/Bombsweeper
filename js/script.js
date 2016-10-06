@@ -36,7 +36,7 @@ $(document).ready(function () {
   function easyGame () {
     revealedCells = 0
     boardSize = 10
-    noOfBombs = boardSize * boardSize * 0.10
+    noOfBombs = boardSize * boardSize * 0.12
     // console.log(noOfBombs)
     createBoard()
     startGame()
@@ -140,7 +140,7 @@ $(document).ready(function () {
           var bombCount = 0
           matrix[rowClicked][cellClicked].clicked = true
           $(this).addClass('revealed-cell')
-          $('.row.' + rowClicked).find('.cell.' + cellClicked).addClass('revealed')
+          // $(this).addClass('revealed')
           revealedCells += 1
       // upon first click
           if (revealedCells === 1) {
@@ -197,6 +197,8 @@ $(document).ready(function () {
         if (rowClicked !== 0 && cellClicked !== 0) {
           if (matrix[rowClicked - 1][cellClicked - 1].bomb === true) {
             bombCount += 1
+          } else {
+            matrix[rowClicked - 1][cellClicked - 1].okToReveal = true
           }
         }
         // check cell above
@@ -211,6 +213,8 @@ $(document).ready(function () {
         if (rowClicked !== 0 && cellClicked !== (matrix.length - 1)) {
           if (matrix[rowClicked - 1][cellClicked + 1].bomb === true) {
             bombCount += 1
+          } else {
+            matrix[rowClicked - 1][cellClicked + 1].okToReveal = true
           }
         }
         // check cell to the right
@@ -225,6 +229,8 @@ $(document).ready(function () {
         if (rowClicked !== (matrix.length - 1) && cellClicked !== (matrix.length - 1)) {
           if (matrix[rowClicked + 1][cellClicked + 1].bomb === true) {
             bombCount += 1
+          } else {
+            matrix[rowClicked + 1][cellClicked + 1].okToReveal = true
           }
         }
         // check cell down
@@ -239,6 +245,8 @@ $(document).ready(function () {
         if (rowClicked !== (matrix.length - 1) && cellClicked !== 0) {
           if (matrix[rowClicked + 1][cellClicked - 1].bomb === true) {
             bombCount += 1
+          } else {
+            matrix[rowClicked + 1][cellClicked - 1].okToReveal = true
           }
         }
         // check cell left
@@ -255,14 +263,35 @@ $(document).ready(function () {
       // $(this).text(bombCount)
 
       function floodClues () {
+        //Cell left up
+        if (rowClicked !== 0 && cellClicked !== 0) {
+          if (matrix[rowClicked - 1][cellClicked - 1].okToReveal === true && matrix[rowClicked - 1][cellClicked - 1].clicked === false) {
+            var $triggerCellUpLeft = $('.row.' + (rowClicked - 1)).find('.cell.' + (cellClicked - 1))
+            $($triggerCellUpLeft).trigger('click')
+            matrix[rowClicked - 1][cellClicked - 1].clicked = true
+            matrix[rowClicked - 1][cellClicked - 1].revealed = true
+            $($triggerCellUpLeft).addClass('revealed-cell')
+          }
+
+        }
         // Cell up
-        if (rowClicked > 0) {
+        if (rowClicked != 0) {
           if (matrix[rowClicked - 1][cellClicked].okToReveal === true && matrix[rowClicked - 1][cellClicked].clicked === false) {
             var $triggerCellUp = $('.row.' + (rowClicked - 1)).find('.cell.' + cellClicked)
             $($triggerCellUp).trigger('click')
             matrix[rowClicked - 1][cellClicked].clicked = true
             matrix[rowClicked - 1][cellClicked].revealed = true
-            $('.row.' + (rowClicked - 1)).find('.cell.' + cellClicked).addClass('revealed')
+            $($triggerCellUp).addClass('revealed-cell')
+          }
+        }
+        // Cell right up
+        if (rowClicked !== 0 && cellClicked !== (matrix.length - 1)){
+          if (matrix[rowClicked - 1][cellClicked + 1].okToReveal === true && matrix[rowClicked - 1][cellClicked + 1].clicked === false){
+            var $triggerCellUpRight = $('.row.' + (rowClicked - 1)).find('.cell.' + (cellClicked + 1))
+            $($triggerCellUpRight).trigger('click')
+            matrix[rowClicked - 1][cellClicked + 1].clicked = true
+            matrix[rowClicked - 1][cellClicked + 1].revealed = true
+            $($triggerCellUpRight).addClass('revealed-cell')
           }
         }
         // Cell Right
@@ -272,7 +301,17 @@ $(document).ready(function () {
             $($triggerCellRight).trigger('click')
             matrix[rowClicked][cellClicked + 1].clicked = true
             matrix[rowClicked][cellClicked + 1].revealed = true
-            $('.row.' + rowClicked).find('.cell.' + (cellClicked + 1)).addClass('revealed')
+            $($triggerCellRight).addClass('revealed-cell')
+          }
+        }
+        //Cell right down
+        if (rowClicked !== (matrix.length - 1) && cellClicked !== (matrix.length - 1)) {
+          if (matrix[rowClicked + 1][cellClicked + 1].okToReveal === true && matrix[rowClicked + 1][cellClicked + 1].clicked === false) {
+            var $triggerCellDownRight = $('.row.' + (rowClicked + 1)).find('.cell.' + (cellClicked + 1))
+            $($triggerCellDownRight).trigger('click')
+            matrix[rowClicked + 1][cellClicked + 1].clicked = true
+            matrix[rowClicked + 1][cellClicked + 1].revealed = true
+            $($triggerCellDownRight).addClass('revealed-cell')
           }
         }
         // Cell down
@@ -282,7 +321,17 @@ $(document).ready(function () {
             $($triggerCellDown).trigger('click')
             matrix[rowClicked + 1][cellClicked].clicked = true
             matrix[rowClicked + 1][cellClicked].revealed = true
-            $('.row.' + (rowClicked + 1)).find('.cell.' + cellClicked).addClass('revealed')
+            $($triggerCellDown).addClass('revealed-cell')
+          }
+        }
+        // Cell down Left
+        if (rowClicked !== (matrix.length - 1) && cellClicked !== 0) {
+          if (matrix[rowClicked + 1][cellClicked - 1].okToReveal === true && matrix[rowClicked + 1][cellClicked - 1].clicked === false) {
+            var $triggerCellDownLeft = $('.row.' + (rowClicked + 1)).find('.cell.' + (cellClicked - 1))
+            $($triggerCellDownLeft).trigger('click')
+            matrix[rowClicked + 1][cellClicked - 1].clicked = true
+            matrix[rowClicked + 1][cellClicked - 1].revealed = true
+            $($triggerCellDownLeft).addClass('revealed-cell')
           }
         }
         // Cell Left
@@ -292,7 +341,7 @@ $(document).ready(function () {
             $($triggerCellLeft).trigger('click')
             matrix[rowClicked][cellClicked - 1].clicked = true
             matrix[rowClicked][cellClicked - 1].revealed = true
-            $('.row.' + rowClicked).find('.cell.' + (cellClicked - 1)).addClass('revealed')
+            $($triggerCellLeft).addClass('revealed-cell')
           }
         }
         return matrix
