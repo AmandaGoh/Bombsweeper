@@ -138,6 +138,7 @@ $(document).ready(function () {
       if (matrix[rowClicked][cellClicked].clicked === false) {
           var bombCount = 0
           matrix[rowClicked][cellClicked].clicked = true
+          $(this).addClass('revealed-cell')
           $('.row.' + rowClicked).find('.cell.' + cellClicked).addClass('revealed')
           revealedCells += 1
       // upon first click
@@ -168,9 +169,7 @@ $(document).ready(function () {
         $('.alert.two').text('')
         $('.alert.one').text('Game Over')
         $('.alert.one').addClass('finish')
-        // window.setTimeout(function restart () {
-        //   window.location.reload(true)
-        // }, 5000)
+        $($anyCell).off('click', playGame)
       }
       // console.log(revealedCells)
       function checkWin () {
@@ -197,7 +196,7 @@ $(document).ready(function () {
         if (rowClicked !== 0) {
           if (matrix[rowClicked - 1][cellClicked].bomb === true) {
             bombCount += 1
-          }else {
+          } else {
             matrix[rowClicked - 1][cellClicked].okToReveal = true
           }
         }
@@ -247,7 +246,6 @@ $(document).ready(function () {
       }
 
       $(this).text(bombCount)
-      $(this).addClass('revealed-cell')
 
       function floodClues () {
         // Cell up
@@ -314,7 +312,7 @@ $(document).ready(function () {
         $('.alert.two').text("No of Flags : " + noOfFlags)
       }
       if (noOfFlags === 0) {
-        $($anyCell).unbind('contextmenu', flagCell)
+        $($anyCell).off('contextmenu', flagCell)
         alert('No flags left!')
       }
       // console.log(noOfFlags)
